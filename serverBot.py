@@ -15,11 +15,11 @@ if not os.path.isfile("servers.txt"):
 	open("servers.txt",'w').close()
 servers = open('servers.txt','r').readlines()
 
-if config.token == "-1":
+if config.token == "your token here":
 	print("Hey! You don't have a valid bot token yet! Go edit config.py before trying again!"
 	return
 else:
-	token = "MTEwNDIxMzY1NzcyMzg2NzIwNw.GOr85W.Fgv8CbdCax7jMaXoCgtsMqt5c8CsdBjM1T9xPY"
+	token = config.token
 
 imgDir = config.imageDir
 
