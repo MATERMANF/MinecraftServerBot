@@ -1,6 +1,6 @@
 
 import getServerInfo
-
+import config #import configuration stuff
 import asyncio
 import time
 import datetime
@@ -15,14 +15,22 @@ if not os.path.isfile("servers.txt"):
 	open("servers.txt",'w').close()
 servers = open('servers.txt','r').readlines()
 
-token = "MTEwNDIxMzY1NzcyMzg2NzIwNw.GOr85W.Fgv8CbdCax7jMaXoCgtsMqt5c8CsdBjM1T9xPY"
+if config.token == "-1":
+	print("Hey! You don't have a valid bot token yet! Go edit config.py before trying again!"
+	return
+else:
+	token = "MTEwNDIxMzY1NzcyMzg2NzIwNw.GOr85W.Fgv8CbdCax7jMaXoCgtsMqt5c8CsdBjM1T9xPY"
 
-imgDir = "images/"
+imgDir = config.imageDir
 
-cooldown = 5*60
+cooldown = config.time_delay * 60
 
 client = commands.Bot(command_prefix="!!!!!", intents = discord.Intents.default())
-client.owner_id = 280804464355573770
+
+if config.owner_id == "-1":
+	print("Hey! No owner ID is set up. Some commands may not work without the owner running them, and could crash the bot. To change this, edit config.py")
+else:
+	client.owner_id = config.owner_id
 
 #class MyClient(discord.Client):
 #	async def on_ready(self):
