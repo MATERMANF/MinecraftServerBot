@@ -1,6 +1,5 @@
 
 import getServerInfo
-import config #import configuration stuff
 import asyncio
 import time
 import datetime
@@ -11,13 +10,23 @@ from discord.ext import commands
 from discord import app_commands
 from discord.ext import tasks
 
+try:
+	import config # import configuration stuff locally
+except ImportError:
+	print("Hey! You don't have a valid bot token yet! Go edit config.py before trying again!")
+	import shutil
+	shutil.copy('config.py.template', 'config.py')
+	import sys
+	sys.exit(1)
+
 if not os.path.isfile("servers.txt"):
 	open("servers.txt",'w').close()
 servers = open('servers.txt','r').readlines()
 
 if config.token == "your token here":
-	print("Hey! You don't have a valid bot token yet! Go edit config.py before trying again!"
-	return
+	print("Hey! You don't have a valid bot token yet! Go edit config.py before trying again!")
+	import sys
+	sys.exit(1)
 else:
 	token = config.token
 
