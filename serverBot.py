@@ -71,7 +71,7 @@ def updateServers():
 #		print("No persistent messages to update")
 	return updateStuff
 
-loop = asyncio.new_event_loop()
+@discord.ext.tasks.loop(minutes=5,reconnect=True)
 async def updateMessages():
 	while True:
 		updateStuff = updateServers()
@@ -126,6 +126,7 @@ async def updateMessages():
 #					print("Message content: {}".format(msg.content))
 					await msg.edit(embed=embed, content="", attachments=[img])
 		await asyncio.sleep(cooldown)
+		
 	
 
 @client.event
@@ -137,13 +138,14 @@ async def on_ready():
 #	print("Commands Synced")
 #	updateStuff = []
 	updateServers()
+	updateMessages.start()
 #	if len(updateStuff) > 0:
 #		print("Servers: {}".format(updateStuff))
 #	else:
 #		print("No servers being updated")
-	asyncio.ensure_future(updateMessages())
+##	asyncio.ensure_future(updateMessages())
 #	asyncio.set_event_loop(updateMessages())
-	loop.run_forever
+##	loop.run_forever
 	print("Bot successfully connected to {0} at {1}:{2}".format(client.user.display_name, datetime.time().hour, datetime.time().minute))
 
 @client.tree.command(name="testcommand", description="don't use, or do.")
@@ -271,5 +273,7 @@ async def help(interaction: discord.Interaction):
 
 if __name__ == "__main__":
 #	await client.tree.sync()
+#	await asyncio.gather()
+#	updateMessages.start()
 	client.run(token)
 
